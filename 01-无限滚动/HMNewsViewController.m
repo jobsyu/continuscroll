@@ -12,6 +12,7 @@
 #import "HMNews.h"
 
 #define HMCellIdentifier @"news"
+#define HMMaxSections 100
 
 @interface HMNewsViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -19,6 +20,20 @@
 @end
 
 @implementation HMNewsViewController
+
+//- (NSMutableArray *)newses
+//{
+//    if (_newses == nil) {
+//        self.newses = [NSMutableArray array];
+//        
+//        for (int i = 0; i<200; i++) {
+//            NSArray *array = [HMNews objectArrayWithFilename:@"newses.plist"];
+//            [self.newses addObjectsFromArray:array];
+//        }
+//    }
+//    return _newses;
+//}
+
 - (NSArray *)newses
 {
     if (_newses == nil) {
@@ -26,18 +41,28 @@
     }
     return _newses;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     // 注册cell
     [self.collectionView registerNib:[UINib nibWithNibName:@"HMNewsCell" bundle:nil] forCellWithReuseIdentifier:HMCellIdentifier];
+    
+//    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:500 inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:HMMaxSections/2] atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.newses.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return HMMaxSections;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
